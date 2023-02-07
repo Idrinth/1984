@@ -2,10 +2,10 @@
   "name": "idrinth/1984",
   "description": "A small tool to remotely track bash histories",
   "keywords": ["surveillance", "monitoring", "server", "remote"],
-  "authors": {
+  "authors": [{
       "name": "Björn Büttner",
       "home": "https://github.com/idrinth"
-  },
+  }],
   "license": "MIT",
   "require": {
     "php": ">=7",
