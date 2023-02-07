@@ -20,10 +20,10 @@
   },
   "scripts": {
     "test": [
-        "vendor/bin/phpcs --standard=psr12 bin src",
+        "vendor/bin/phpcs --standard=psr12 bin src test",
         "vendor/bin/phpunit test"
     ],
-    "fix": "vendor/bin/phpcbf --standard=psr12 bin src"
+    "fix": "vendor/bin/phpcbf --standard=psr12 bin src test"
   },
   "bin": ["bin/remote-logger.php"],
   "autoload": {

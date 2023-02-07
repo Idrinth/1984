@@ -11,7 +11,7 @@ final class RandomAlphaNumericStringTest extends TestCase
         parent::setUpBeforeClass();
         require_once __DIR__ . '/../src/randomAlphaNumericString.php';
     }
-    public function provideLengths(): array
+    public static function provideLengths(): array
     {
         return [
             [0],

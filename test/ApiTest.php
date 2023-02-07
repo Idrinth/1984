@@ -23,11 +23,12 @@ class ApiTest extends TestCase
     public function succeedsWithDuplicateRemoval(): void
     {
         $key = randomAlphaNumericString(9);
+        $sqlite = __DIR__ . '/db.sqlite';
         file_put_contents(
             __DIR__ . '/api.php',
             str_replace(
                 ['##SOURCE_HOST##', '##SOURCE_KEY##', '##DATABASE_CONNECTION##', '##TARGET_FILTER##', "'LOG'"],
-                ['127.0.0.1', $key, 'sqlite:'.__DIR__.'/db.sqlite', 'true', "'POST'"],
+                ['127.0.0.1', $key, "sqlite:$sqlite", 'true', "'POST'"],
                 file_get_contents(dirname(__DIR__).'/src/api.php')
             )
         );
@@ -49,8 +50,7 @@ class ApiTest extends TestCase
         curl_exec($c);
         curl_close($c);
         $api->stop();
-        $file = __DIR__ . '/db.sqlite';
-        self::assertFileExists($file);
-        unlink($file);
+        self::assertFileExists($sqlite);
+        unlink($sqlite);
     }
 }
