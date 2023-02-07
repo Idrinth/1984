@@ -4,7 +4,7 @@
   "keywords": ["surveillance", "monitoring", "server", "remote"],
   "authors": [{
       "name": "Björn Büttner",
-      "home": "https://github.com/idrinth"
+      "homepage": "https://github.com/idrinth"
   }],
   "license": "MIT",
   "require": {
