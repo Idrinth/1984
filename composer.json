@@ -20,11 +20,9 @@
     "symfony/process": "*"
   },
   "scripts": {
-    "test": [
-        "vendor/bin/phpcs --standard=psr12 bin src test",
-        "vendor/bin/phpunit test"
-    ],
-    "fix": "vendor/bin/phpcbf --standard=psr12 bin src test"
+    "test": "vendor/bin/phpunit test",
+    "test-standards": "vendor/bin/phpcs --standard=psr12 bin src test",
+    "fix-standards": "vendor/bin/phpcbf --standard=psr12 bin src test"
   },
   "bin": ["bin/remote-logger.php"],
   "autoload": {
