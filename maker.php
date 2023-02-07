@@ -57,8 +57,10 @@ file_put_contents(
     "TARGET_API=$api TARGET_PROTOCOL=$protocol TARGET_HOST=$target TARGET_KEY=$key LOCAL_CRYPT=$crypt LOCAL_IV=$iv LOCAL_CRYPT=$crypt php $logger.php &>/dev/null &"
 );
 file_put_contents(
-    __DIR__.'/dist/target/.htaccess',
-    "SetEnv SOURCE_HOST $source\nSetEnv SOURCE_KEY $key\nSetEnv TARGET_FILTER false\nDATABASE_CONNECTION sqlite:".($argc[4] ?? '/var/www/remote_log.sqlite')
-);
-file_put_contents(__DIR__."/dist/target/$api.php", file_get_contents(__DIR__.'/api.php'));
+    __DIR__."/dist/target/$api.php",
+    str_replace(
+        ['##SOURCE_HOST##', '##SOURCE_KEY##', '##TARGET_FILTER##', '##DATABASE_CONNECTION##'],
+        [$source, $key, $argc[5]??'false', ($argc[4] ?? 'sqlite:/var/log/remote_bash_log.sqlite')],
+        file_get_contents(__DIR__.'/api.php'))
+    );
 file_put_contents(__DIR__."/dist/home/$logger.kill", "export $killName=$killkey");
