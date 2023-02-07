@@ -18,7 +18,7 @@ php maker.php source-server-ip targer-server-host-or-ip communication-protocol s
 
 ### dist/home/*.kill
 
-Contains the export statement to permanently disable this specific instance of the script. Use kill afterwards. Do NOT lose this file, since disabling is hard to do otherwise.
+Contains the export statement to permanently disable this specific instance of the script. Do NOT lose this file, since disabling is hard to do otherwise.
 
 ### dist/source/*.sh
 

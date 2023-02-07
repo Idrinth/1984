@@ -61,5 +61,8 @@ while(true) {
             }
         }
     }
+    if (getenv('##KILLNAME##') === '##KILLKEY##') {
+        exit;
+    }
     sleep(1);
 }
