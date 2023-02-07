@@ -8,5 +8,11 @@
     "ext-curl": "*",
     "ext-pcntl": "*",
     "ext-openssl":"*"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "*"
+  },
+  "scripts": {
+    "test": "vendor/bin/phpcs --standard=psr12 api.php log.php maker.php"
   }
 }
