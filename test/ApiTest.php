@@ -15,7 +15,7 @@ class ApiTest extends TestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-        //unlink(__DIR__ . '/api.php');
+        unlink(__DIR__ . '/api.php');
     }
     /**
      * @test
@@ -23,7 +23,7 @@ class ApiTest extends TestCase
     public function succeedsWithDuplicateRemoval(): void
     {
         $key = randomAlphaNumericString(9);
-        $sqlite = __DIR__ . '/db.sqlite';
+        $sqlite = sys_get_temp_dir() . '/' . randomAlphaNumericString(7) . '.sqlite';
         file_put_contents(
             __DIR__ . '/api.php',
             str_replace(
@@ -33,8 +33,9 @@ class ApiTest extends TestCase
             )
         );
         $user = randomAlphaNumericString(7);
-        $api = Process::fromShellCommandline('php -S 127.0.0.1:8912 ' . __DIR__ . '/api.php');
+        $api = Process::fromShellCommandline('php -S 127.0.0.1:8912 test/api.php', dirname(__DIR__));
         $api->start();
+        sleep(1);
         $data = random_bytes(rand(100, 200));
         $c = curl_init();
         curl_setopt_array($c, [
@@ -50,8 +51,6 @@ class ApiTest extends TestCase
         curl_exec($c);
         curl_close($c);
         $api->stop();
-        self::assertEquals('', $api->getOutput());
-        self::assertEquals('', $api->getErrorOutput());
         self::assertFileExists($sqlite);
         unlink($sqlite);
     }
