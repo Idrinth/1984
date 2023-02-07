@@ -7,7 +7,7 @@ This tool is merely a small project of mine to aggregate my own bash histories. 
 
 Run this script to generate files to be deployed.
 ```sh
-php maker.php source-server-ip targer-server-host-or-ip communication-protocol sdatabase-dns enable-log-deduplication
+php bin/remote-logger.php source-server-ip targer-server-host-or-ip communication-protocol sdatabase-dns enable-log-deduplication
 ```
 
 - source-server-ip: for example `1.2.3.4`
