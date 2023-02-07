@@ -10,14 +10,25 @@
   "require": {
     "php": ">=7",
     "ext-curl": "*",
+    "ext-pcntl": "*",
     "ext-openssl":"*"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "*"
+    "squizlabs/php_codesniffer": "*",
+    "phpunit/phpunit": "*",
+    "symfony/process": "*"
   },
   "scripts": {
-    "test": "vendor/bin/phpcs --standard=psr12 bin src",
+    "test": [
+        "vendor/bin/phpcs --standard=psr12 bin src",
+        "vendor/bin/phpunit test"
+    ],
     "fix": "vendor/bin/phpcbf --standard=psr12 bin src"
   },
-  "bin": ["bin/remote-logger.php"]
+  "bin": ["bin/remote-logger.php"],
+  "autoload": {
+    "psr-4": {
+      "\\De\\Idrinth\\Project1984\\": "test"
+    }
+  }
 }
