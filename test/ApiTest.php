@@ -15,7 +15,7 @@ class ApiTest extends TestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-        unlink(__DIR__ . '/api.php');
+        //unlink(__DIR__ . '/api.php');
     }
     /**
      * @test
