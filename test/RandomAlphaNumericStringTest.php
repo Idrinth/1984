@@ -9,7 +9,7 @@ final class RandomAlphaNumericStringTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
-        require_once __DIR__ . '/../src/randomAlphanumericString.php';
+        require_once __DIR__ . '/../src/randomAlphaNumericString.php';
     }
     public function provideLengths(): array
     {

@@ -10,7 +10,7 @@ class ApiTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
-        require_once __DIR__ . '/../src/randomAlphanumericString.php';
+        require_once __DIR__ . '/../src/randomAlphaNumericString.php';
     }
     protected function tearDown(): void
     {
