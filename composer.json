@@ -16,7 +16,8 @@
     "squizlabs/php_codesniffer": "*"
   },
   "scripts": {
-    "test": "vendor/bin/phpcs --standard=psr12 api.php log.php maker.php randomAlphaNumericString.php",
-    "fix": "vendor/bin/phpcbf --standard=psr12 api.php log.php maker.php randomAlphaNumericString.php"
-  }
+    "test": "vendor/bin/phpcs --standard=psr12 bin src",
+    "fix": "vendor/bin/phpcbf --standard=psr12 bin src"
+  },
+  "bin": ["bin/remote-logger.php"]
 }

