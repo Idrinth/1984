@@ -1,8 +1,8 @@
 ---
-name: API-Bug report
-about: Create a report to help us improve the API
+name: Logger-Bug report
+about: Create a report to help us improve
 title: ''
-labels: API, bug, enhancement
+labels: bug, Logger
 assignees: ''
 
 ---
@@ -23,11 +23,10 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Environment:**
- - Distribution: [e.g. Debian]
+**Desktop (please complete the following information):**
  - PHP-Version [e.g. 7.4.33]
- - Apache2-Version [e.g. 2.4.1]
  - Version [e.g. 1.0.0]
+ - Distribution: [e.g. Debian]
 
 **Additional context**
 Add any other context about the problem here.
