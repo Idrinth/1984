@@ -1,0 +1,12 @@
+{
+  "name": "idrinth/1984",
+  "description": "A small tool to remotely track bash histories",
+  "keywords": ["surveillance", "monitoring", "server", "remote"],
+  "author": "Björn Büttner",
+  "require": {
+    "php": ">=7",
+    "ext-curl": "*",
+    "ext-pcntl": "*",
+    "ext-openssl":"*"
+  }
+}
