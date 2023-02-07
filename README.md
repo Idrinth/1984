@@ -24,7 +24,7 @@ Contains the export statement to permanently disable this specific instance of t
 
 This is the script to be started on the server to monitor.
 
-### dist/source/*.sh
+### dist/source/*.php
 
 This is the script actually monitoring the server.
 
