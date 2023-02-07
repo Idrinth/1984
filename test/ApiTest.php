@@ -15,7 +15,9 @@ class ApiTest extends TestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-        unlink(__DIR__ . '/api.php');
+        if (is_file(__DIR__ . '/api.php')) {
+            unlink(__DIR__ . '/api.php');
+        }
     }
     /**
      * @test
@@ -50,7 +52,7 @@ class ApiTest extends TestCase
         ]);
         curl_exec($c);
         curl_close($c);
-        $api->stop(5, SIGKILL);
+        $api->stop(5);
         self::assertFileExists($sqlite);
         unlink($sqlite);
     }
