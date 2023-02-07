@@ -10,6 +10,7 @@
   "require": {
     "php": ">=7",
     "ext-curl": "*",
+    "ext-pdo": "*",
     "ext-pcntl": "*",
     "ext-openssl":"*"
   },
