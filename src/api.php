@@ -1,4 +1,5 @@
 <?php
+
 if ($_SERVER['REMOTE_ADDR'] !== '##SOURCE_HOST##') {
     die();
 }
