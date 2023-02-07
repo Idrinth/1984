@@ -13,8 +13,8 @@ php maker.php source-server-ip targer-server-host-or-ip communication-protocol s
 - source-server-ip: for example `1.2.3.4`
 - target-server-host-or-ip: for example `1.1.2.3` or `idrinth.de`
 - communication-protocol: http by default, could be any curl can use in theory
-- database-dns: optional, defaults to sqlite:/var/log/remote_bash_log.sqlite
-- enable-log-deduplication: defaults to false, set to true to remove duplicate entries from the logs in one package
+- database-dns: optional, defaults to `sqlite:/var/log/remote_bash_log.sqlite`
+- enable-log-deduplication: defaults to `false`, set to `true` to remove duplicate entries from the logs in one package
 
 ### dist/home/*.kill
 
