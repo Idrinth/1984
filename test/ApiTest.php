@@ -50,6 +50,8 @@ class ApiTest extends TestCase
         curl_exec($c);
         curl_close($c);
         $api->stop();
+        self::assertEquals('', $api->getOutput());
+        self::assertEquals('', $api->getErrorOutput());
         self::assertFileExists($sqlite);
         unlink($sqlite);
     }
