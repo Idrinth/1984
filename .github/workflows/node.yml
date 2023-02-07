@@ -33,4 +33,4 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm install eslint -g
-    - run: npm run eslint
+    - run: npm run test-standards
