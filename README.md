@@ -3,7 +3,7 @@
 
 This tool is merely a small project of mine to aggregate my own bash histories. It it is obviously not intended for surveillance of other users. If you plan to use it like that make sure, that the bash history is written immediately (`history -a`) and the program runs with root rights.
 
-## maker.php
+## bin/remote-logger.php
 
 Run this script to generate files to be deployed.
 ```sh
