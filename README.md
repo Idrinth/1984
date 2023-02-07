@@ -33,3 +33,7 @@ This is the script actually monitoring the server.
 ### dist/target/*.php
 
 This is the api, that validates the write requests and saves them to the given database
+
+## Help & Support
+
+If you want direct support options, feel free to drop by on [Discord](https://discord.gg/xHSF8CGPTh).
