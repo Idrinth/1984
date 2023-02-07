@@ -16,8 +16,8 @@ final class RandomAlphaNumericStringTest extends TestCase
         return [
             [0],
             [1],
-            [rand(0,100)],
-            [rand(100,200)],
+            [rand(0, 100)],
+            [rand(100, 200)],
         ];
     }
     /**

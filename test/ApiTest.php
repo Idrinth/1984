@@ -29,11 +29,11 @@ class ApiTest extends TestCase
             str_replace(
                 ['##SOURCE_HOST##', '##SOURCE_KEY##', '##DATABASE_CONNECTION##', '##TARGET_FILTER##', "'LOG'"],
                 ['127.0.0.1', $key, "sqlite:$sqlite", 'true', "'POST'"],
-                file_get_contents(dirname(__DIR__).'/src/api.php')
+                file_get_contents(dirname(__DIR__) . '/src/api.php')
             )
         );
         $user = randomAlphaNumericString(7);
-        $api = Process::fromShellCommandline('php -S 127.0.0.1:8912 '.__DIR__.'/api.php');
+        $api = Process::fromShellCommandline('php -S 127.0.0.1:8912 ' . __DIR__ . '/api.php');
         $api->start();
         $data = random_bytes(rand(100, 200));
         $c = curl_init();
