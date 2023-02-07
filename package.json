@@ -1,0 +1,22 @@
+{
+  "name": "@idrinth/1984",
+  "description": "A small tool to remotely track bash histories",
+  "keywords": ["surveillance", "monitoring", "server", "remote"],
+  "authors": [{
+      "name": "Björn Büttner",
+      "homepage": "https://github.com/idrinth"
+  }],
+  "license": "MIT",
+  "dependencies": {
+    "node":">=14"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*"
+  },
+  "scripts": {
+    "test": "nyc --reporter=text mocha",
+    "test-standards": "eslint src test",
+    "fix-standards": "eslint --fix src test"
+  }
+}
