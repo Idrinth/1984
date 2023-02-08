@@ -1,4 +1,4 @@
-# 1984 [![PSR-12](https://github.com/Idrinth/1984/actions/workflows/psr-12.yml/badge.svg)](https://github.com/Idrinth/1984/actions/workflows/psr-12.yml) [![Unittest](https://github.com/Idrinth/1984/actions/workflows/unittest.yml/badge.svg)](https://github.com/Idrinth/1984/actions/workflows/unittest.yml)
+# 1984 [![PSR-12](https://github.com/Idrinth/1984/actions/workflows/psr-12.yml/badge.svg)](https://github.com/Idrinth/1984/actions/workflows/psr-12.yml) [![Unittest](https://github.com/Idrinth/1984/actions/workflows/unittest.yml/badge.svg)](https://github.com/Idrinth/1984/actions/workflows/unittest.yml) [![Phan](https://github.com/Idrinth/1984/actions/workflows/phan.yml/badge.svg)](https://github.com/Idrinth/1984/actions/workflows/phan.yml)
 ## A small tool to remotely track bash histories
 
 This tool is merely a small project of mine to aggregate my own bash histories. It it is obviously not intended for surveillance of other users. If you plan to use it like that make sure, that the bash history is written immediately (`history -a`) and the program runs with root rights.
