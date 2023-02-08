@@ -62,6 +62,11 @@ file_put_contents(
             )
             . "\n"
             . substr(
+                file_get_contents("$in/replaceIn.php"),
+                5
+            )
+            . "\n"
+            . substr(
                 str_replace(
                     ['##KILLKEY##', '##KILLNAME##', '###ENABLE_BASHRC_MODIFICATION###'],
                     // @phan-suppress-next-line PhanTypeArraySuspicious

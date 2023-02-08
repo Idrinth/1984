@@ -14,7 +14,8 @@
   },
   "suggest": {
     "ext-pcntl": "For automated restart handling.",
-    "ext-curl": "For faster requests."
+    "ext-curl": "For faster requests.",
+    "ext-posix": "For root-user validation checks."
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "*",

@@ -27,3 +27,5 @@ jobs:
       run: php -l src/randomAlphaNumericString.php
     - name: Lint transmit.php
       run: php -l src/transmit.php
+    - name: Lint replaceIn.php
+      run: php -l src/replaceIn.php
