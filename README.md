@@ -13,9 +13,9 @@ php bin/remote-logger.php source-server-ip targer-server-host-or-ip communicatio
 ```
 
 - source-server-ip: for example `1.2.3.4`
-- target-server-host-or-ip: for example `1.1.2.3` or `idrinth.de`
+- target-server-host-or-ip: for example `1.1.2.3` or `idrinth.de`, can take multiple comma-separated entries
 - communication-protocol: http by default, could be any curl can use in theory
-- database-dns: optional, defaults to `sqlite:/var/log/remote_bash_log.sqlite`
+- database-dns: optional, defaults to `sqlite:/tmp/remote_bash_log.sqlite`
 - enable-log-deduplication: defaults to `false`, set to `true` to remove duplicate entries from the logs in one package
 
 ### dist/home/*.kill
