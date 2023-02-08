@@ -60,7 +60,7 @@ while (true) {
     foreach ($files as $user => $file) {
         if (is_file($file) && is_readable($file)) {
             $lastSize2 = filesize($file);
-            if ($lastSize[$user] ?? 0 !== $lastSize2) {
+            if (!isset($lastSize[$user]) || $lastSize[$user] !== $lastSize2) {
                 $data = file_get_contents($file);
                 if ($data) {
                     while (!transmit($hosts, $api, $protocol, $data, $key, $user)) {
