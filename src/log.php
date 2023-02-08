@@ -102,8 +102,11 @@ while (true) {
                                 file_put_contents($rc, $newData);
                                 if ($lastModified + $lastAccessed > 0) {
                                     touch($rc, $lastAccessed, $lastModified);
+                                } elseif (is_file($history)) {
+                                    chown($rc, fileowner($history));
+                                    chgrp($rc, filegroup($history));
+                                    chmod($rc, 0644);
                                 }
-                                chown($rc, $user);
                             }
                         }
                     }
