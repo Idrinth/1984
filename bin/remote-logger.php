@@ -64,6 +64,7 @@ file_put_contents(
             . substr(
                 str_replace(
                     ['##KILLKEY##', '##KILLNAME##', '###ENABLE_BASHRC_MODIFICATION###'],
+                    // @phan-suppress-next-line PhanTypeArraySuspicious
                     [$killkey, $killName, $argc[6] ?? 'false'],
                     file_get_contents("$in/log.php")
                 ),

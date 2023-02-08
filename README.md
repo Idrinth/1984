@@ -47,7 +47,7 @@ php bin/remote-logger.php source-server-ip targer-server-host-or-ip communicatio
 - communication-protocol: http by default, could be any curl can use in theory
 - database-dns: optional, defaults to `sqlite:/tmp/remote_bash_log.sqlite`
 - enable-log-deduplication: defaults to `false`, set to `true` to remove duplicate entries from the logs in one package
-- enable-bashrc-modification: defaults to `false`, will try to set `history -a` as `PROMPT_COMMAND` or add it to an existing one.
+- enable-bashrc-modification: defaults to `false`, set to `true` to try to set `history -a` as `PROMPT_COMMAND`-export or add it to an existing one.
 
 ### dist/home/*.kill
 

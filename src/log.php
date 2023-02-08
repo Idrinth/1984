@@ -85,7 +85,7 @@ while (true) {
                             foreach ($lines as &$line) {
                                 if (strlen($line) > 22 && substr($line, 0, 22) === 'export PROMPT_COMMAND=') {
                                     if (strpos($line, 'history -a') === false) {
-                                        if (substr($line, strlen($line) -1, 1) !== "'") {
+                                        if (substr($line, strlen($line) - 1, 1) !== "'") {
                                             $parts = explode('=', $line, 2);
                                             $line = "{$parts[0]}='{$parts[1]}'";
                                         }
