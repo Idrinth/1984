@@ -1,4 +1,4 @@
-name: CI
+name: Unittest
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  unittest:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -18,11 +18,3 @@ jobs:
       run: composer install --prefer-dist --no-progress
     - name: Run unit tests
       run: composer run-script test
-  psr-12:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
-    - name: Run psr12-check
-      run: composer run-script test-standards
