@@ -43,14 +43,14 @@ class ApiTest extends TestCase
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_URL => 'http://127.0.0.1:8912/api.php',
             CURLOPT_POSTFIELDS => randomAlphaNumericString(rand(100, 200)),
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTPHEADER => [
                 'CONTENT-TYPE: text/plain',
                 "ANYTHINGGOES: $key",
                 "LOGGEDUSER: $user",
                 'LOGTYPE: bash'
-            )
+            ]
         ]);
-        curl_exec($c);
+        self::assertTrue(curl_exec($c));
         curl_close($c);
         $api->stop(5);
         self::assertFileExists($sqlite);

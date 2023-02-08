@@ -19,6 +19,7 @@ if ($headers['ANYTHINGGOES'] !== '##SOURCE_KEY##') {
 $pdo = new PDO('##DATABASE_CONNECTION##');
 $pdo->exec("CREATE TABLE IF NOT EXISTS remote_logs (name TEXT,command TEXT,created TEXT)");
 $data = explode("\n", file_get_contents('php://input'));
+// @phan-suppress-next-line PhanPluginBothLiteralsBinaryOp
 if ('##TARGET_FILTER##' === 'true') {
     $data = array_unique($data);
 }

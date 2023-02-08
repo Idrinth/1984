@@ -2,7 +2,8 @@
 
 require_once __DIR__ . '/../src/randomAlphaNumericString.php';
 
-if ($argc !== 3) {
+if ($argc < 3) {
+    // @phan-suppress-next-line PhanPluginRemoveDebugEcho
     echo 'call this script the following way: php maker.php source-ip target-ip';
     die(1);
 }
@@ -89,6 +90,7 @@ file_put_contents(
     "$out/target/$api.php",
     str_replace(
         ['##SOURCE_HOST##', '##SOURCE_KEY##', '##TARGET_FILTER##', '##DATABASE_CONNECTION##'],
+        // @phan-suppress-next-line PhanTypeArraySuspicious
         [$source, $key, $argc[5] ?? 'false', ($argc[4] ?? 'sqlite:/tmp/remote_bash_log.sqlite')],
         file_get_contents("$in/api.php")
     )

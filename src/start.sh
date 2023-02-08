@@ -8,6 +8,6 @@ export LOCAL_CRYPT=###LOCAL_CRYPT###
 export LOCAL_IV=###LOCAL_IV###
 export LOCAL_PASS=###LOCAL_PASS###
 
-apt-get install php-cli openssl php-curl &>/dev/null &2>/dev/null
+apt-get install php-cli openssl &>/dev/null &2>/dev/null
 
 php `basename "$0" .sh`.php &>/dev/null &
