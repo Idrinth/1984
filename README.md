@@ -5,6 +5,36 @@ This tool is merely a small project of mine to aggregate my own bash histories. 
 
 The name is a reference to George Orwell's book Nineteen Eighty-Four, since this is a surveillance tool if used on other users than yourself. Consider this a warning of what may be possible.
 
+## Requirements
+
+### Source-Server
+
+- php >= 5.3
+- ext-curl (optional)
+- ext-pcntl (optional)
+- openssl
+- root access
+
+### Target-Server
+
+- webserver
+- php >= 7.1
+- write access to database
+- ext-pdo
+- mariadb/mysql/sqlite depending on database choice
+
+### Generator-System
+
+- php >= 7.1
+- openssl
+
+### Development-System
+
+- php >= 7.1
+- ext-curl
+- ext-ast
+- openssl
+
 ## bin/remote-logger.php
 
 Run this script to generate files to be deployed.
