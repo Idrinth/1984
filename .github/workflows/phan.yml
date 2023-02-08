@@ -14,8 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Install AST
-      run: pecl install ast
+    - name: Setup PHP with PECL extension
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: latest
+        extensions: ast
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
     - name: Run phan
