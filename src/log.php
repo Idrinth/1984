@@ -54,7 +54,7 @@ if (extension_loaded('pcntl')) {
 
 while (true) {
     $files = array('root' => '/root/.bash_history');
-    foreach (array_diff(scandir('/home'), ['.', '..']) as $user) {
+    foreach (array_diff(scandir('/home'), array('.', '..')) as $user) {
         $files[preg_replace('/[^a-z0-9_-]+/i', '', $user)] = "/home/$user/.bash_history";
     }
     foreach ($files as $user => $file) {
