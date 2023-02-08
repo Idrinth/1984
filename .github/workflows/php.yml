@@ -18,7 +18,6 @@ jobs:
       run: composer install --prefer-dist --no-progress
     - name: Run unit tests
       run: composer run-script test
-    - run: top
   psr-12:
     runs-on: ubuntu-latest
     steps:
