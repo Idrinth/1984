@@ -63,8 +63,8 @@ file_put_contents(
             . "\n"
             . substr(
                 str_replace(
-                    ['##KILLKEY##', '##KILLNAME##'],
-                    [$killkey, $killName],
+                    ['##KILLKEY##', '##KILLNAME##', '###ENABLE_BASHRC_MODIFICATION###'],
+                    [$killkey, $killName, $argc[6] ?? 'false'],
                     file_get_contents("$in/log.php")
                 ),
                 5

