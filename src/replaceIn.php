@@ -12,7 +12,7 @@ function replaceIn($file, $search, $replace)
 {
     $lastModified = filemtime($file) ?: 0;
     $lastAccessed = fileatime($file) ?: 0;
-    file_put_contents($file, str_replace($search, $replace, file_get_contents($file)?: ''));
+    file_put_contents($file, str_replace($search, $replace, file_get_contents($file) ?: ''));
     if ($lastAccessed + $lastModified > 0) {
         touch($file, $lastAccessed, $lastModified);
     }
