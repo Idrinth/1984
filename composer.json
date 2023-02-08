@@ -20,7 +20,7 @@
     "symfony/process": "*"
   },
   "scripts": {
-    "test": "vendor/bin/phpunit test",
+    "test": "vendor/bin/phpunit --testdox test",
     "test-standards": "vendor/bin/phpcs --standard=psr12 bin src test",
     "fix-standards": "vendor/bin/phpcbf --standard=psr12 bin src test"
   },
