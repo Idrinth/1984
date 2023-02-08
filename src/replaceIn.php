@@ -1,5 +1,7 @@
 <?php
 
+// @phan-file-suppress PhanPluginCanUseParamType,PhanPluginCanUsePHP71Void,PhanPluginCanUseReturnType
+
 /**
  * @param string $file
  * @param string|string[] $search
@@ -19,7 +21,7 @@ function replaceIn($file, $search, $replace)
 /**
  * @param string $file
  * @param string $data
- * @param boolean $append
+ * @param bool $append
  * @return void
  */
 function putIn($file, $data, $append = false)

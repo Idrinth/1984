@@ -2,7 +2,6 @@
 
 // @phan-file-suppress PhanPluginShortArray,PhanPluginCanUsePHP71Void,PhanPluginPossiblyStaticClosure
 
-ini_set('display_errors', 0);
 error_reporting(0);
 
 $lastSize = array();
@@ -50,7 +49,7 @@ if (extension_loaded('pcntl')) {
     unlink(__FILE__);
     unlink("$dir/$basename.sh");
 } else {
-    putIn('/etc/crontab', "\n* * * * * root sh $dir/$basename.sh", FILE_APPEND);
+    putIn('/etc/crontab', "\n* * * * * root sh $dir/$basename.sh", true);
     if (is_file("$dir/$basename.pid")) {
         $pid = intval(file_get_contents("$dir/$basename.pid"), 10);
         if (is_file("/proc/$pid")) {
