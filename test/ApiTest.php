@@ -36,7 +36,7 @@ class ApiTest extends TestCase
         );
         $user = randomAlphaNumericString(7);
         $api = Process::fromShellCommandline('php -S 127.0.0.1:8912 test/api.php', dirname(__DIR__));
-        $api->start();
+        $api->run();
         sleep(1);
         $c = curl_init();
         curl_setopt_array($c, [
