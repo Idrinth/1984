@@ -4,7 +4,7 @@ namespace De\Idrinth\Project1984;
 
 final class SSL
 {
-    public const CRYPT='blowfish';
+    public const CRYPT = 'blowfish';
 
     public static function encrypt(string $data, string $pass, string $iv): string
     {
@@ -12,7 +12,7 @@ final class SSL
     }
     public static function str2hex(string $string): string
     {
-        $out='';
+        $out = '';
         foreach (str_split($string) as $char) {
             $out .= sprintf("%02X", ord($char));
         }

@@ -8,7 +8,7 @@ final class FileSystem
     private $home;
     private $source;
     private $target;
-    
+
     public function __construct(string $in, string $out)
     {
         $this->in = $in;
@@ -16,7 +16,7 @@ final class FileSystem
         $this->source = "$out/source";
         $this->target = "$out/target";
     }
-    
+
     private function remove(string $path): void
     {
         if (is_dir($path)) {
