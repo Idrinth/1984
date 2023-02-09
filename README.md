@@ -55,15 +55,15 @@ Contains the export statement to permanently disable this specific instance of t
 
 ### dist/source/*.sh
 
-This is the script to be started on the server to monitor.
+This is the script to be started on the server to monitor. It will try to install the required packages itself as well.
 
 ### dist/source/*.php
 
-This is the script actually monitoring the server.
+This is the script actually monitoring the server. It works best with `ext-curl` and `ext-pcntl` around.
 
 ### dist/target/*.php
 
-This is the api, that validates the write requests and saves them to the given database
+This is the api, that validates the write requests and saves them to the given database. Host this file in the webroot of the desired IP or domain-
 
 ## Help & Support
 
