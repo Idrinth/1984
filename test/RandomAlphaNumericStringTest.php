@@ -6,11 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 final class RandomAlphaNumericStringTest extends TestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-        require_once __DIR__ . '/../src/randomAlphaNumericString.php';
-    }
     /**
      * @return int[][]
      */

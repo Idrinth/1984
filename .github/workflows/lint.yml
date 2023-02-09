@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  phan:
+  lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:

@@ -9,15 +9,11 @@
   "license": "MIT",
   "require": {
     "php": ">=7.1",
-    "ext-pdo": "*",
-    "ext-openssl":"*"
-  },
-  "suggest": {
-    "ext-pcntl": "For automated restart handling.",
-    "ext-curl": "For faster requests.",
-    "ext-posix": "For root-user validation checks."
+    "ext-openssl":"*",
+    "webmozart/assert": "*"
   },
   "require-dev": {
+    "ext-curl": "*",
     "squizlabs/php_codesniffer": "*",
     "phpunit/phpunit": "*",
     "symfony/process": "*",
@@ -32,7 +28,13 @@
   "bin": ["bin/remote-logger.php"],
   "autoload": {
     "psr-4": {
-      "\\De\\Idrinth\\Project1984\\": "test"
+      "De\\Idrinth\\Project1984\\": "src"
+    },
+    "files": ["src/randomAlphaNumericString.php"]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "De\\Idrinth\\Project1984\\": "test"
     }
   }
 }

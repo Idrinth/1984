@@ -9,7 +9,7 @@
  * @param string $data
  * @param string $key
  * @param string $user
- * @return boolean
+ * @return bool
  */
 function transmit(array $hosts, $api, $protocol, $data, $key, $user)
 {
