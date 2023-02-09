@@ -4,9 +4,9 @@ namespace De\Idrinth\Project1984;
 
 final class Command
 {
-    private $secrets;
-    private $config;
-    private $fileSystem;
+    private Secrets $secrets;
+    private Config $config;
+    private FileSystem $fileSystem;
 
     public function __construct(Secrets $secrets, Config $config, FileSystem $fileSystem)
     {

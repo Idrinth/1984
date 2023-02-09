@@ -4,14 +4,14 @@ namespace De\Idrinth\Project1984;
 
 final class Secrets
 {
-    private $pass;
-    private $ivPhp;
-    private $ivSh;
-    private $killKey;
-    private $killName;
-    private $api;
-    private $logger;
-    private $key;
+    private string $pass;
+    private string $ivPhp;
+    private string $ivSh;
+    private string $killKey;
+    private string $killName;
+    private string $api;
+    private string $logger;
+    private string $key;
 
     public function __construct()
     {

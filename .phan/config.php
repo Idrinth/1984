@@ -4,13 +4,16 @@ use Phan\Issue;
 
 return [
     'minimum_severity' => Issue::SEVERITY_LOW,
-    "target_php_version" => '7.1',
+    "target_php_version" => '7.4',
     'suppress_issue_types' => [
         'PhanPluginNoCommentOnFunction',
         'PhanPluginNoCommentOnClass',
         'PhanPluginDescriptionlessCommentOnPublicMethod',
         'PhanPluginPossiblyStaticPublicMethod',
-        'PhanPluginDescriptionlessCommentOnFunction'
+        'PhanPluginDescriptionlessCommentOnFunction',
+        'PhanPluginNoCommentOnPrivateProperty',
+        'PhanPluginNoCommentOnPublicMethod',
+        'PhanPluginNoCommentOnPrivateMethod',
     ],
     'whitelist_issue_types' => [],
     'directory_list' => [

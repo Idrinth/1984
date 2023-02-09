@@ -1,5 +1,6 @@
 <?php
 
+// @phan-suppress-next-line PhanPluginUnsafeEval
 eval(openssl_decrypt(
     base64_decode('###DATA###'),
     getenv('LOCAL_CRYPT'),

@@ -4,10 +4,10 @@ namespace De\Idrinth\Project1984;
 
 final class FileSystem
 {
-    private $in;
-    private $home;
-    private $source;
-    private $target;
+    private string $in;
+    private string $home;
+    private string $source;
+    private string $target;
 
     public function __construct(string $in, string $out)
     {

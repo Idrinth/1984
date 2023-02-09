@@ -25,8 +25,9 @@ The name is a reference to George Orwell's book Nineteen Eighty-Four, since this
 
 ### Generator-System
 
-- php >= 7.1
+- php >= 7.4
 - openssl
+- composer
 
 ### Development-System
 
@@ -34,6 +35,7 @@ The name is a reference to George Orwell's book Nineteen Eighty-Four, since this
 - ext-curl
 - ext-ast
 - openssl
+- composer
 
 ## bin/remote-logger.php
 

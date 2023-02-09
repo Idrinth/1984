@@ -7,12 +7,12 @@ use Webmozart\Assert\Assert;
 
 final class Config
 {
-    private $target;
-    private $source;
-    private $protocol;
-    private $database;
-    private $enableFilter;
-    private $enableBashRC;
+    private string $target;
+    private string $source;
+    private string $protocol;
+    private string $database;
+    private string $enableFilter;
+    private string $enableBashRC;
 
     /**
      * @param string[] $arguments
