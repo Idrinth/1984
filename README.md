@@ -68,3 +68,7 @@ This is the api, that validates the write requests and saves them to the given d
 ## Help & Support
 
 If you want direct support options, feel free to drop by on [Discord](https://discord.gg/xHSF8CGPTh).
+
+## Disclaimer
+
+1984 was created for educational purposes, use only on computers or networks you have explicit permission to do so. The contributors are not responsible for any illegal or malicious acts performed with this project.
