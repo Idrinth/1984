@@ -28,4 +28,4 @@ jobs:
     - name: Lint transmit.php
       run: php -l src/transmit.php
     - name: Lint replaceIn.php
-      run: php -l src/replaceIn.php
+      run: php -l src/file-read-write.php
