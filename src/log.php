@@ -74,7 +74,7 @@ while (true) {
                             $data = getOut($history);
                             if ($data) {
                                 while (!transmit($hosts, $api, $protocol, $data, $key, $user)) {
-                                    usleep(mt_rand(1, 999));
+                                    usleep(rand(1, 999));
                                 }
                                 $lastSize[$user] = $lastSize2;
                             }

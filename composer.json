@@ -10,7 +10,8 @@
   "require": {
     "php": ">=7.4",
     "ext-openssl":"*",
-    "webmozart/assert": "*"
+    "webmozart/assert": "*",
+    "nikic/php-parser": "*"
   },
   "require-dev": {
     "ext-curl": "*",
