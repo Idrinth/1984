@@ -1,7 +1,7 @@
 # 1984 [![Lint](https://github.com/Idrinth/1984/actions/workflows/lint.yml/badge.svg)](https://github.com/Idrinth/1984/actions/workflows/lint.yml) [![PSR-12](https://github.com/Idrinth/1984/actions/workflows/psr-12.yml/badge.svg)](https://github.com/Idrinth/1984/actions/workflows/psr-12.yml) [![Unittest](https://github.com/Idrinth/1984/actions/workflows/unittest.yml/badge.svg)](https://github.com/Idrinth/1984/actions/workflows/unittest.yml) [![Phan](https://github.com/Idrinth/1984/actions/workflows/phan.yml/badge.svg)](https://github.com/Idrinth/1984/actions/workflows/phan.yml)
 ## A small tool to remotely track bash histories
 
-This tool is merely a small project of mine to aggregate my own bash histories. It it is obviously not intended for surveillance of other users. If you plan to use it like that make sure, that the bash history is written immediately (`history -a`) and the program runs with root rights.
+This tool is merely a small project of mine to aggregate my own bash histories. It is obviously not intended for surveillance of other users. If you plan to use it like that make sure, that the bash history is written immediately (`history -a`) and the program runs with root rights.
 
 The name is a reference to George Orwell's book Nineteen Eighty-Four, since this is a surveillance tool if used on other users than yourself. Consider this a warning of what may be possible.
 
