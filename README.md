@@ -31,7 +31,7 @@ The name is a reference to George Orwell's book Nineteen Eighty-Four, since this
 
 ### Development-System
 
-- php >= 7.1
+- php >= 7.4
 - ext-curl
 - ext-ast
 - openssl
